@@ -1,0 +1,182 @@
+.l-inner {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 4%;
+  padding-right: 4%;
+  max-width: 100%;
+
+ 
+}
+
+.p-header {
+  height: 60px;
+}
+
+.p-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.p-header__title {
+  background-color: #2c4157;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.p-header__nav {
+
+}
+
+.p-header__nav-list {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.p-header__nav-list-item {
+
+}
+
+.p-header__nav-list-link {
+  
+}
+
+.p-header__nav-list-link:hover {
+  opacity: 0.7;
+}
+
+.p-mv {
+  background: url('./img/mv.png') no-repeat center center / cover;
+  height: 600px;
+}
+
+.p-introduce {
+  padding-top: 80px;
+}
+
+.c-section-title-wrap {
+  text-align: center;
+}
+
+.c-section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: inline-block;
+  border-bottom: 1px solid #333;
+}
+
+.p-introduce__container {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.p-introduce__content {
+
+}
+
+.p-introduce__name {
+  font-weight: bold;
+}
+
+.p-introduce__text {
+  margin-top: 1rem;
+}
+
+.p-introduce__image {
+  border-radius: 50%;
+  overflow: hidden;
+  max-width: 120px;
+}
+
+
+
+.p-profile {
+  margin-top: 80px;
+}
+
+.p-profile__items {
+  margin-top: 60px;
+  display: flex;
+  gap: 1rem;
+}
+
+.p-profile-item {
+  text-align: center;
+}
+
+.p-profile-item__title {
+  font-weight: bold;
+}
+
+.p-profile-item__text {
+  margin-top: 0.3rem;
+}
+.p-profile-item__image {
+  margin-top: 0.3rem;
+}
+
+.p-footer {
+  border-bottom: 3px solid #333;
+  margin-top: 120px;
+}
+
+.p-footer__text {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 599px) {
+  .p-header__title {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .p-header__nav-list {
+    gap: 1rem;
+  }
+  .p-introduce__container {
+    display: block;
+  }
+
+  .p-introduce__image {
+    margin-top: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .p-profile__items {
+    display: block;
+  }
+
+  .p-profile-item:not(:first-child) {
+    margin-top: 1rem;
+}
+
+.p-footer {
+  border-bottom: 8px solid #333;
+}
+}
+
+@media(max-width: 349px) {
+  .p-header__title {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .p-header__nav-list {
+    gap: 0.5rem;
+  }
+}
