@@ -18,7 +18,7 @@ def calc_golf_score(pars, player_score)
       result << 'パー'
     elsif player_score[index] > pars[index]
       point = player_score[index] - pars[index]
-      result << if point > 2
+      result << if point >= 2
                   "#{point}ボギー"
                 else
                   'ボギー'
