@@ -10,6 +10,11 @@ opt.on('-m MONTH', Integer) do |month|
 end
 opt.parse!(ARGV)
 
+if option[:month] < 1 || option[:month] > 12
+  puts "#{option[:month]} is neither a month number (1..12) nor a name"
+  exit
+end
+
 year = Date.today.year
 month = option[:month] || Date.today.month
 first_day = Date.new(year, month, 1)
