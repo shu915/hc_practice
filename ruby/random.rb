@@ -3,12 +3,8 @@
 members = %w[A B C D E F]
 members.shuffle!
 
-if rand(2) == 1
-  group1 = members[0..1]
-  group2 = members[2..5]
-else
-  group1 = members[0..2]
-  group2 = members[3..5]
-end
+num = rand(1..2)
+group1 = members[0..num]
+group2 = members[(num+1)..5]
 
 puts "#{group1.join(' ')} / #{group2.join(' ')} "
