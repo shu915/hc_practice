@@ -10,7 +10,7 @@ opt.on('-m MONTH', Integer) do |month|
 end
 opt.parse!(ARGV)
 
-if option[:month] < 1 || option[:month] > 12
+if option[:month] && (option[:month] < 1 || option[:month] > 12)
   puts "#{option[:month]} is neither a month number (1..12) nor a name"
   exit
 end
