@@ -1,24 +1,14 @@
-members = ["A", "B", "C", "D", "E", "F"]
+# frozen_string_literal: true
 
-def group_3_3(members)
-  group1 = members.sample(3)
-  group2 = members - group1
-  [group1, group2]
+members = %w[A B C D E F]
+members.shuffle!
+
+if rand(2) == 1
+  group1 = members[0..1]
+  group2 = members[2..5]
+else
+  group1 = members[0..2]
+  group2 = members[3..5]
 end
 
-def group_2_4(members)
-  group1 = members.sample(2)
-  group2 = members - group1
-  [group1, group2]
-end
-
-def make_group(members)
-  if rand(2) == 0
-    group_3_3(members)
-  else
-    group_2_4(members)
-  end
-end
-
-groups = make_group(members)
-puts "#{groups[0]}\n#{groups[1]}"
+puts "#{group1.join(' ')} / #{group2.join(' ')} "
