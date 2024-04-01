@@ -1,34 +1,34 @@
 # frozen_string_literal: true
+SCORE_MAPPING = {
+  -4 => 'コンドル',
+  -3 => 'アルバトロス',
+  -2 => 'イーグル',
+  -1 => 'バーディ',
+  0 => 'パー',
+  1 => 'ボギー',
+}
 
 def calc_golf_score(pars, player_score)
   result = []
+  pars.zip(player_score).each do |par, score|
+    diff = score - par
 
-  18.times do |index|
-    if player_score[index] + 4 == pars[index]
-      result << 'コンドル'
-    elsif player_score[index] == 1
-      result << 'ホールインワン'
-    elsif player_score[index] + 3 == pars[index]
-      result << 'アルバトロス'
-    elsif player_score[index] + 2 == pars[index]
-      result << 'イーグル'
-    elsif player_score[index] + 1 == pars[index]
-      result << 'バーディ'
-    elsif player_score[index] == pars[index]
-      result << 'パー'
-    elsif player_score[index] > pars[index]
-      point = player_score[index] - pars[index]
-      result << if point >= 2
-                  "#{point}ボギー"
-                else
-                  'ボギー'
-                end
+    result << case
+      ##ホールインワンよりコンドルを優先する
+      when score == 1 && diff != -4
+        'ホールインワン'
+      when diff >= 2
+        "#{diff}ボギー"
+      else
+        SCORE_MAPPING[diff]
     end
   end
+
   puts result.join(',')
 end
 
-# text_case.txtに履いてある2つの配列を標準入力で読み込んで配列にいれる
+
+# text_case.txtに書いてある2つの配列を標準入力で読み込んで配列にいれる
 pars = gets.chomp.split(',').map(&:to_i)
 player_score = gets.chomp.split(',').map(&:to_i)
 
