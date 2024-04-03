@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ポケモンのクラス、名前やタイプ、hpを持ち、攻撃ができる
 class Pokemon
   include NameService
 
