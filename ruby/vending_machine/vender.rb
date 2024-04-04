@@ -6,11 +6,11 @@ require_relative './juice'
 # 自販機のインスタンスを作ってから使います
 class Vender
   def initialize
-    @inventory = {
-      ペプシ: { juice: Juice.new('ペプシ', 150), quantity: 5 },
-      モンスター: { juice: Juice.new('モンスター', 230), quantity: 5 },
-      いろはす: { juice: Juice.new('いろはす', 120), quantity: 5 }
-    }
+    @inventory = [
+      { juice: Juice.new('ペプシ', 150), quantity: 5 },
+      { juice: Juice.new('モンスター', 230), quantity: 5 },
+      { juice: Juice.new('いろはす', 120), quantity: 5 }
+  ]
     @sales = 0
   end
 
@@ -20,14 +20,16 @@ class Vender
   end
 
   def stock(name)
-    @inventory[name.to_sym][:quantity]
+    selected_item = @inventory.find { |item| item[:juice].name == name }
+    selected_item ? selected_item[:quantity] : 0
   end
 
   def can_buy
     puts '以下が購入可能'
-    @inventory.map do |_name, value|
-      if value[:quantity].positive?
-        value[:juice].name
+    @inventory.map do |item|
+      if item[:quantity].positive?
+        juice = item[:juice]
+        juice.name
       else
         ''
       end
@@ -35,21 +37,21 @@ class Vender
   end
 
   def add_stock(name, quantity)
-    juice = @inventory[name.to_sym]
-    juice[:quantity] += quantity
+    selected_item = @inventory.find { |item| item[:juice].name == name }
+    selected_item[:quantity] += quantity
     puts "#{name}の在庫を#{quantity}本補充しました"
     puts "\n"
   end
 
   def buy(name, suica)
-    juice = @inventory[name.to_sym]
-    name = juice[:juice].name
-    price = juice[:juice].price
-    quantity = juice[:quantity]
+    selected_item = @inventory.find { |item| item[:juice].name == name }
+    name = selected_item[:juice].name
+    price = selected_item[:juice].price
+    quantity = selected_item[:quantity]
 
     if suica.deposit >= price && quantity.positive?
       increase_sales(price)
-      juice[:quantity] -= 1
+      selected_item[:quantity] -= 1
       puts "#{name}を購入しました。"
       suica.decrease_deposit(price)
       puts "売上が#{sales}円になりました"
