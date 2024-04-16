@@ -7,7 +7,7 @@ SCORE_MAPPING = {
   -1 => 'バーディ',
   0 => 'パー',
   1 => 'ボギー'
-}
+}.freeze
 
 def calc_golf_score(pars, player_score)
   result = []
