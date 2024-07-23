@@ -26,7 +26,7 @@ console.log("日 月 火 水 木 金 土");
 
 const days = [];
 for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i.toString().padStart(2, ' '));
+  days.push(i.toString().padStart(2, ' '));
 }
 
 let calendarLine = "   ".repeat(firstDayWeek);
