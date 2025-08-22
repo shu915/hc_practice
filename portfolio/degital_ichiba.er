@@ -55,7 +55,7 @@ updated_at {label: "datetime"}
 
 [carts]
 *id {label: "bigint, not null"}
-+user_id {label: "bigint, not null, FK(users) uniq+"}
++user_id {label: "bigint, FK(users) uniq+"}
 +shop_id {label: "bigint, not null, FK(shops) uniq+"}
 created_at {label: "datetime"}
 updated_at {label: "datetime"}
