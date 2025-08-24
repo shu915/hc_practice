@@ -1,0 +1,161 @@
+# 複数のカラムでユニーク制約をつけるとき、暫定的にuniq+と表記しています
+
+[users]
+*id {label: "bigint, not null"}
+email {label: "citext, not null, uniq"}
+name {label: "varchar(20), not null"}
+role {label: "enum, not null"}
+email_verified_at {label: "datetime"}
+stripe_customer_id {label: "text, uniq"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[user_identities]
+*id {label: "bigint, not null"}
++user_id {label: "bigint, not null, FK(users)"}
+provider {label: "enum, not null uniq+"}
+provider_subject {label: "text, not null uniq+"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[shops]
+*id {label: "bigint, not null"}
++user_id {label: "bigint, not null, FK(users)"}
+name {label: "varchar(40), not null"}
+description {label: "text"}
+logo
+banner
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[products]
+*id {label: "bigint, not null"}
++shop_id {label: "bigint, not null, FK(shops)"}
+name {label: "varchar(120), not null"}
+description {label: "text"}
+price_excluding_tax_cents {label: "int, not null"}
+stock_quantity {label: "int, not null"}
+is_published {label: "bool"}
+image
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[tags]
+*id {label: "bigint, not null"}
+name {label: "varchar(10), not null, uniq"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[product_taggings]
+*id {label: "bigint, not null"}
++product_id {label: "bigint, not null, FK(products) uniq+"}
++tag_id {label: "bigint, not null, FK(tags) uniq+"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[carts]
+*id {label: "bigint, not null"}
++user_id {label: "bigint, FK(users) uniq+"}
++shop_id {label: "bigint, not null, FK(shops) uniq+"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[cart_items]
+*id {label: "bigint, not null"}
++cart_id {label: "bigint, not null, FK(carts) uniq+"}
++product_id {label: "bigint, not null, FK(products) uniq+"}
+quantity {label: "int, not null"}
+unit_price_cents_snapshot {label: "int, not null"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[user_addresses]
+*id {label: "bigint, not null"}
++user_id {label: "bigint, not null, uniq, FK(users)"}
+full_name {label: "text, not null" }
+phone {label: "text" }
+postal_code {label: "text, not null"}
+country {label: "varchar(2), not null"}
+state {label: "text, not null"}
+city {label: "text, not null"}
+line1 {label: "text, not null"}
+line2 {label: "text" }
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[tax_rates]
+*id {label: "bigint, not null"}
+rate {label: "decimal, not null"}
+effective_from {label: "datetime, not null"}
+effective_to {label: "datetime"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[orders]
+*id {label: "bigint, not null"}
++user_id {label: "bigint, not null, FK(users)"}
++shop_id {label: "bigint, not null, FK(shops)"}
+status {label: "enum, not null" }
+subtotal_cents {label: "int, not null" }
+tax_cents {label: "int, not null"}
+shipping_cents {label: "int, not null"}
+total_cents {label: "int, not null"}
+placed_at {label: "datetime"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[order_addresses]
+*id {label: "bigint, not null"}
++order_id {label: "bigint, not null, FK(orders), uniq"}
+full_name {label: "text, not null" }
+phone {label: "text" }
+postal_code {label: "text, not null"}
+country_code {label: "varchar(2), not null"}
+state {label: "text, not null"}
+city {label: "text, not null"}
+line1 {label: "text, not null"}
+line2 {label: "text" }
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[order_items]
+*id {label: "bigint, not null"}
++order_id {label: "bigint, not null, FK(orders)"}
++product_id {label: "bigint, not null, FK(products)"}
+title_snapshot {label: "text, not null"}
+unit_price_cents_snapshot {label: "int, not null"}
+quantity {label: "int, not null"}
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+[payments]
+*id {label: "bigint, not null"}
++order_id {label: "bigint, not null, FK(orders)"}
+provider {label: "enum, not null"}
+status {label: "enum, not null"}
+stripe_payment_intent_id {label: "text, not null, uniq"}
+stripe_charge_id {label: "text, not null"}
+amount_cents {label: "int, not null" }
+created_at {label: "datetime"}
+updated_at {label: "datetime"}
+
+# Cardinality    Syntax
+# 0 or 1         ?
+# exactly 1      1
+# 0 or more      *
+# 1 or more      +
+users 1--+ user_identities
+users 1--? shops
+shops 1--* products
+products 1--* product_taggings
+tags 1--+ product_taggings
+users 1--* carts
+carts 1--+ cart_items
+products 1--+ cart_items
+users 1--? user_addresses
+users 1--* orders
+shops 1--* orders
+orders 1--1 order_addresses
+orders 1--+ order_items
+products 1--* order_items
+orders 1--1 payments
