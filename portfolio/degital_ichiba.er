@@ -46,7 +46,7 @@ name {label: "varchar(10), not null, uniq"}
 created_at {label: "datetime"}
 updated_at {label: "datetime"}
 
-[product_taggings]
+[product_tags]
 *id {label: "bigint, not null"}
 +product_id {label: "bigint, not null, FK(products) uniq+"}
 +tag_id {label: "bigint, not null, FK(tags) uniq+"}
@@ -147,8 +147,8 @@ updated_at {label: "datetime"}
 users 1--+ user_identities
 users 1--? shops
 shops 1--* products
-products 1--* product_taggings
-tags 1--+ product_taggings
+products 1--* product_tags
+tags 1--+ product_tags
 users 1--* carts
 carts 1--+ cart_items
 products 1--+ cart_items
